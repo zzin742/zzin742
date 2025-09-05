@@ -97,7 +97,6 @@ Me chamo José Luiz, tenho 18 anos e sou natural de Piracaia-SP. Sempre tive afi
 
 </p>
 
-## 👾 Pac-Man GitHub Contribution Graph
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/zzin742/zzin742/output/pacman-contribution-graph-dark.svg">

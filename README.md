@@ -67,7 +67,8 @@ Me chamo José Luiz, tenho 18 anos e sou natural de Piracaia-SP. Sempre tive afi
     align="left" 
     alt="Python" 
     title="Python"
-    width="30px" 
+    width="35px" 
+    height="35px"
     style="padding-right: 10px;" 
     src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" 
 />

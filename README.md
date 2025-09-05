@@ -49,6 +49,5 @@ Paralelamente, venho me dedicando a cursos por fora para aprofundar meus conheci
 ### 🐍 Snake Game  
 
 <p align="center">
-  <img src="https://github.com/zzin742/zzin742/blob/output/github-contribution-grid-snake.svg" alt="Snake animation" />
+  <img src="https://raw.githubusercontent.com/zzin742/zzin742/output/github-contribution-grid-snake.svg" alt="Snake animation" />
 </p>
-

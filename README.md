@@ -1,12 +1,13 @@
 # 👨‍💻 José Luiz
 
-**`Desenvolvedor Full Stack`**
+**`Full Stack Developer | TI & Infraestrutura`**
 
 Sou **José Luiz**, tenho 18 anos e sou natural de **Piracaia-SP**.  
-Apaixonado por tecnologia desde pequeno, comecei a programar por curiosidade e acabei descobrindo minha vocação.  
-Atualmente curso **Análise e Desenvolvimento de Sistemas**, enquanto desenvolvo projetos pessoais e acadêmicos focados em **web development**, **bancos de dados** e **integração de APIs**.
+Atuo como **Desenvolvedor Full Stack** e **Profissional de TI**, unindo o melhor dos dois mundos:  
+a criação de aplicações modernas e o domínio técnico em **redes, sistemas e infraestrutura**.  
 
-Meu objetivo é me tornar um **Full Stack Developer** completo — dominando do front ao back e construindo soluções que resolvem problemas reais e entregam valor de verdade.
+Atualmente curso **Análise e Desenvolvimento de Sistemas**,  
+enquanto desenvolvo projetos que envolvem **web development, automação, bancos de dados e arquitetura de sistemas**.
 
 ---
 
@@ -51,11 +52,21 @@ Meu objetivo é me tornar um **Full Stack Developer** completo — dominando do 
 
 #### ⚙️ Back-end
 <p>
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" width="35px" title="Python"/>
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" width="35px" title="Node.js"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" width="35px" title="Python"/>
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" width="35px" title="MySQL"/>
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" width="35px" title="PostgreSQL"/>
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/supabase/supabase-original.svg" width="35px" title="Supabase"/>
+</p>
+
+#### 🧰 Infraestrutura & DevOps
+<p>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" width="35px" title="Linux"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-original.svg" width="35px" title="Bash"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" width="35px" title="Docker"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nginx/nginx-original.svg" width="35px" title="Nginx"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/windows8/windows8-original.svg" width="35px" title="Windows Server"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/githubactions/githubactions-original.svg" width="35px" title="GitHub Actions"/>
 </p>
 
 #### 🧠 Outros

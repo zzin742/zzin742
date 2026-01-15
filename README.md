@@ -2,7 +2,7 @@
 
 **`Full Stack Developer | TI & Infraestrutura`**
 
-Sou **José Luiz**, tenho 18 anos e sou natural de **Piracaia-SP**.  
+Sou **José Luiz**, tenho 19 anos e sou natural de **Piracaia-SP**.  
 Atuo como **Desenvolvedor Full Stack** e **Profissional de TI**, unindo o melhor dos dois mundos:  
 a criação de aplicações modernas e o domínio técnico em **redes, sistemas e infraestrutura**.  
 

@@ -3,13 +3,11 @@
 <!--  Versão 2 — Profissional + visual rico                        -->
 <!-- ============================================================ -->
 
-<!-- =========== HEADER BANNER =========== -->
+<!-- =========== HEADER =========== -->
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=DC2626&height=180&section=header&text=Jos%C3%A9%20Luiz&fontSize=70&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=Full%20Stack%20Developer%20%E2%80%A2%20TI%20%26%20Infraestrutura&descSize=18&descAlignY=58&descAlign=50" width="100%"/>
-
 <a href="https://github.com/zzin742">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=24&duration=2800&pause=700&color=DC2626&center=true&vCenter=true&width=650&lines=Ol%C3%A1!+Eu+sou+o+Jos%C3%A9+Luiz+%F0%9F%91%8B;Full+Stack+Developer+%E2%9A%A1;TI+%26+Infraestrutura+%F0%9F%96%A5%EF%B8%8F;Construindo+o+%C3%81pice+Hub+%F0%9F%9A%80;Sempre+aprendendo+algo+novo+%F0%9F%93%9A" alt="Typing SVG" />
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=28&duration=2800&pause=700&color=DC2626&center=true&vCenter=true&width=700&lines=Ol%C3%A1!+Eu+sou+o+Jos%C3%A9+Luiz+%F0%9F%91%8B;Full+Stack+Developer+%E2%9A%A1;TI+%26+Infraestrutura+%F0%9F%96%A5%EF%B8%8F;Construindo+o+%C3%81pice+Hub+%F0%9F%9A%80;Sempre+aprendendo+algo+novo+%F0%9F%93%9A" alt="Typing SVG" />
 </a>
 
 <br/>
@@ -53,7 +51,7 @@ const joseLuiz: Developer = {
 </td>
 <td width="40%" align="center">
 
-<img src="https://media.giphy.com/media/qgQUggAC3Pfv687qPC/giphy.gif" width="100%"/>
+<img src="https://media.giphy.com/media/qgQUggAC3Pfv687qPC/giphy.gif" width="100%" alt="dev at work"/>
 
 </td>
 </tr>
@@ -154,19 +152,12 @@ const joseLuiz: Developer = {
 
 <br/>
 
-<!-- =========== ESTATÍSTICAS =========== -->
-## 📊 Estatísticas detalhadas
+<!-- =========== STREAK =========== -->
+## 🔥 Sequência de contribuições
 
-<div align="center">
-
-<img height="180em" src="https://github-readme-stats.vercel.app/api?username=zzin742&show_icons=true&theme=radical&hide_border=true&count_private=true&include_all_commits=true&cache_seconds=1800" />
-<img height="180em" src="https://github-readme-streak-stats.herokuapp.com/?user=zzin742&theme=radical&hide_border=true&card_width=420" />
-
-<br/>
-
-<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=zzin742&layout=donut-vertical&theme=radical&hide_border=true&langs_count=10&cache_seconds=1800" />
-
-</div>
+<p align="center">
+  <img src="https://streak-stats.demolab.com/?user=zzin742&theme=radical&hide_border=true&card_width=600&fire=DC2626&currStreakLabel=DC2626" />
+</p>
 
 <br/>
 
@@ -175,15 +166,6 @@ const joseLuiz: Developer = {
 
 <p align="center">
   <img src="https://github-readme-activity-graph.vercel.app/graph?username=zzin742&bg_color=0D1117&color=DC2626&line=DC2626&point=ffffff&area=true&hide_border=true&custom_title=Contribui%C3%A7%C3%B5es%20no%20GitHub%20%E2%80%94%20%C3%9Altimos%20meses" />
-</p>
-
-<br/>
-
-<!-- =========== 3D CONTRIBUTION GRAPH =========== -->
-## 🎲 Contribuições em 3D
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/zzin742/zzin742/output/profile-3d-contrib/profile-night-rainbow.svg" />
 </p>
 
 <br/>
@@ -249,16 +231,23 @@ const joseLuiz: Developer = {
 <br/>
 
 <!-- =========== FOOTER =========== -->
+<br/>
+
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=DC2626&height=120&section=footer&text=Vamos%20construir%20algo%20juntos?&fontSize=24&fontColor=ffffff&animation=twinkling&fontAlignY=75" width="100%"/>
+### ☕ Vamos construir algo juntos?
 
 <a href="https://joselz.vercel.app/">
-  <img src="https://img.shields.io/badge/Veja_meu_portfólio_completo-dc2626?style=for-the-badge&logo=vercel&logoColor=white" />
+  <img src="https://img.shields.io/badge/🚀_Veja_meu_portfólio_completo-dc2626?style=for-the-badge&logoColor=white" />
+</a>
+<a href="mailto:josehtl07@gmail.com">
+  <img src="https://img.shields.io/badge/📧_Bora_conversar-000000?style=for-the-badge&logoColor=white" />
 </a>
 
 <br/>
 <br/>
+
+---
 
 <sub>Feito com 💻 + ☕ + 🎧 por <b>José Luiz</b> · Piracaia, SP · 🇧🇷</sub>
 

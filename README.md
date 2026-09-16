@@ -15,26 +15,32 @@ Faço a interface, conecto os dados e coloco no ar. Sou **José Luiz**, desenvol
 
 ## Projetos que você pode abrir
 
+<p>
 <a href="https://londonfogoficial.com.br/">
   <picture>
     <source media="(max-width: 640px)" srcset="./assets/london-fog-mobile.svg" />
     <img src="./assets/london-fog.svg" width="100%" alt="London Fog — loja de calçados com catálogo, carrinho, pagamento e gestão de produtos. Next.js, Supabase e Mercado Pago. No ar. Abrir a loja." />
   </picture>
 </a>
+</p>
 
+<p>
 <a href="https://apicecontabilidade.cnt.br/">
   <picture>
     <source media="(max-width: 640px)" srcset="./assets/apice-mobile.svg" />
     <img src="./assets/apice.svg" width="100%" alt="Ápice Contabilidade — site institucional com serviços e contato para novos clientes. Next.js e Vercel. No ar. Abrir o site." />
   </picture>
 </a>
+</p>
 
+<p>
 <a href="https://otto-one-snowy.vercel.app/">
   <picture>
     <source media="(max-width: 640px)" srcset="./assets/otto-mobile.svg" />
     <img src="./assets/otto.svg" width="100%" alt="Otto — finanças pessoais com assistente de inteligência artificial. React. Em desenvolvimento. Abrir o projeto." />
   </picture>
 </a>
+</p>
 
 **[Ver todos os projetos no portfólio →](https://joseluiz.dev.br/#projetos)**
 

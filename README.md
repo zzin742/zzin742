@@ -16,19 +16,61 @@ Sites, apps, sistemas e automação.
 
 ### Sobre
 
-Sou o desenvolvedor principal do **Ápice Hub**, plataforma interna que substituiu **cinco ferramentas** na empresa. Também cuido de TI e infraestrutura para **mais de 80 pessoas**.
+Sou desenvolvedor full stack e responsável pelo TI de uma empresa. Estudo Análise e Desenvolvimento de Sistemas na UniFAAT, no segundo ano.
 
-Estudo **Análise e Desenvolvimento de Sistemas na UniFAAT** e moro em **Piracaia, SP**.
+Também construo fora do trabalho: loja com pagamento, app de finanças, página de casal e assistente de voz. Em cada um faço a interface, o banco e o deploy, e entrego no ar.
 
-### Tecnologias
+Quando uma rotina é repetitiva demais para ocupar uma pessoa, eu escrevo um robô.
+
+### Tecnologias e ferramentas
+
+**Front-end**
 
 <p>
+  <img src="./assets/stack/html.svg" alt="HTML5" height="34" />
+  <img src="./assets/stack/css.svg" alt="CSS3" height="34" />
+  <img src="./assets/stack/javascript.svg" alt="JavaScript" height="34" />
   <img src="./assets/stack/typescript.svg" alt="TypeScript" height="34" />
   <img src="./assets/stack/react.svg" alt="React" height="34" />
   <img src="./assets/stack/nextjs.svg" alt="Next.js" height="34" />
+  <img src="./assets/stack/tailwind.svg" alt="Tailwind CSS" height="34" />
+  <img src="./assets/stack/sass.svg" alt="Sass" height="34" />
+</p>
+
+**Back-end e dados**
+
+<p>
   <img src="./assets/stack/nodejs.svg" alt="Node.js" height="34" />
-  <img src="./assets/stack/supabase.svg" alt="Supabase" height="34" />
   <img src="./assets/stack/python.svg" alt="Python" height="34" />
+  <img src="./assets/stack/supabase.svg" alt="Supabase" height="34" />
+  <img src="./assets/stack/postgresql.svg" alt="PostgreSQL" height="34" />
+  <img src="./assets/stack/prisma.svg" alt="Prisma" height="34" />
+  <img src="./assets/stack/redis.svg" alt="Redis" height="34" />
+</p>
+
+**Automação e infraestrutura**
+
+<p>
+  <img src="./assets/stack/playwright.svg" alt="Playwright" height="34" />
+  <img src="./assets/stack/linux.svg" alt="Linux" height="34" />
+  <img src="./assets/stack/docker.svg" alt="Docker" height="34" />
+  <img src="./assets/stack/nginx.svg" alt="Nginx" height="34" />
+  <img src="./assets/stack/bash.svg" alt="Bash" height="34" />
+  <img src="./assets/stack/vercel.svg" alt="Vercel" height="34" />
+  <img src="./assets/stack/cloudflare.svg" alt="Cloudflare" height="34" />
+  <img src="./assets/stack/githubactions.svg" alt="GitHub Actions" height="34" />
+  <img src="./assets/stack/redes-servidores.svg" alt="Redes e servidores" height="34" />
+</p>
+
+**Ferramentas**
+
+<p>
+  <img src="./assets/stack/git.svg" alt="Git" height="34" />
+  <img src="./assets/stack/github.svg" alt="GitHub" height="34" />
+  <img src="./assets/stack/vscode.svg" alt="VS Code" height="34" />
+  <img src="./assets/stack/figma.svg" alt="Figma" height="34" />
+  <img src="./assets/stack/notion.svg" alt="Notion" height="34" />
+  <img src="./assets/stack/postman.svg" alt="Postman" height="34" />
 </p>
 
 ### Projetos

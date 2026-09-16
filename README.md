@@ -1,48 +1,64 @@
 <a href="https://joseluiz.dev.br/">
-  <img src="./assets/capa.png" alt="José Luiz · Full stack e TI. Sites, apps e sistemas. Do zero ao ar." width="100%" />
+  <picture>
+    <source media="(max-width: 640px)" srcset="./assets/hero-mobile.svg" />
+    <img src="./assets/hero.svg" width="100%" alt="José Luiz — desenvolvedor full stack. Sites, apps, sistemas e automação. Do zero ao ar." />
+  </picture>
 </a>
 
-<p>
-  <a href="https://joseluiz.dev.br/"><strong>Portfólio ↗</strong></a> &nbsp;·&nbsp;
-  <a href="https://www.linkedin.com/in/jos%C3%A9-luiz-115861362">LinkedIn</a> &nbsp;·&nbsp;
+<p align="center">
+  <a href="https://joseluiz.dev.br/"><strong>PORTFÓLIO ↗</strong></a> &nbsp;&nbsp; / &nbsp;&nbsp;
+  <a href="https://www.linkedin.com/in/jos%C3%A9-luiz-115861362">LinkedIn</a> &nbsp;&nbsp; / &nbsp;&nbsp;
   <a href="mailto:josehtl07@gmail.com">E-mail</a>
 </p>
 
-Sou **José Luiz**, desenvolvedor full stack em Piracaia, SP. Construo sites, lojas, apps e sistemas — da interface ao banco de dados e ao deploy. Também sou responsável pelo TI de uma empresa e estudo Análise e Desenvolvimento de Sistemas na UniFAAT.
+Faço a interface, conecto os dados e coloco no ar. Sou **José Luiz**, desenvolvedor full stack e responsável pelo TI de uma empresa. Moro em Piracaia, SP, e estudo ADS na UniFAAT.
 
-### Projetos selecionados
+## Projetos que você pode abrir
 
-**[London Fog ↗](https://londonfogoficial.com.br/)**  
-Loja de calçados com catálogo, carrinho, pagamento e painel para cadastrar produtos.  
-<sub>Next.js · Supabase · Mercado Pago</sub>
+<a href="https://londonfogoficial.com.br/">
+  <picture>
+    <source media="(max-width: 640px)" srcset="./assets/london-fog-mobile.svg" />
+    <img src="./assets/london-fog.svg" width="100%" alt="London Fog — loja de calçados com catálogo, carrinho, pagamento e gestão de produtos. Next.js, Supabase e Mercado Pago. No ar. Abrir a loja." />
+  </picture>
+</a>
 
-**[Ápice Contabilidade ↗](https://apicecontabilidade.cnt.br/)**  
-Site institucional com os serviços do escritório e contato direto para novos clientes.  
-<sub>Next.js · Vercel</sub>
+<a href="https://apicecontabilidade.cnt.br/">
+  <picture>
+    <source media="(max-width: 640px)" srcset="./assets/apice-mobile.svg" />
+    <img src="./assets/apice.svg" width="100%" alt="Ápice Contabilidade — site institucional com serviços e contato para novos clientes. Next.js e Vercel. No ar. Abrir o site." />
+  </picture>
+</a>
 
-**[Otto ↗](https://otto-one-snowy.vercel.app/)**  
-App de finanças pessoais com assistente de IA para entender quanto sobra no fim do mês.  
-<sub>React · IA · Em desenvolvimento</sub>
+<a href="https://otto-one-snowy.vercel.app/">
+  <picture>
+    <source media="(max-width: 640px)" srcset="./assets/otto-mobile.svg" />
+    <img src="./assets/otto.svg" width="100%" alt="Otto — finanças pessoais com assistente de inteligência artificial. React. Em desenvolvimento. Abrir o projeto." />
+  </picture>
+</a>
 
-[Mais projetos no portfólio →](https://joseluiz.dev.br/#projetos)
+**[Ver todos os projetos no portfólio →](https://joseluiz.dev.br/#projetos)**
 
-### O que construo no trabalho
+## Sistemas que a empresa abre toda manhã
 
-Sou o desenvolvedor principal do **Ápice Hub**, uma plataforma interna que reúne chat, tarefas, BI, documentos, treinamento e chamados. Ela substituiu **cinco ferramentas** usadas pela empresa.
+No **Ápice Hub**, reuni chat, tarefas, BI, documentos, treinamento e chamados em uma plataforma que substituiu **cinco ferramentas**. Sou o desenvolvedor principal do sistema e também cuido de redes, máquinas e acessos para **mais de 80 pessoas**.
 
-Também cuido de redes, máquinas e acessos para **mais de 80 pessoas**, além de criar automações que tiram tarefas repetitivas da rotina.
+Quando uma rotina é repetitiva demais para ocupar uma pessoa, escrevo uma automação.
 
-### Código por aqui
+### Para explorar o código
 
-- **[AttentionGuard](https://github.com/zzin742/AttentionGuard)** — estudo de visão computacional com Python, OpenCV e MediaPipe para detectar sinais de distração e sonolência.
-- **[Bots em Python](https://github.com/zzin742/meus-bots)** — exemplos de automação de tarefas, adaptados para preservar os processos internos.
+- **[AttentionGuard ↗](https://github.com/zzin742/AttentionGuard)** — visão computacional com Python, OpenCV e MediaPipe para estudar sinais de distração e sonolência.
+- **[Bots em Python ↗](https://github.com/zzin742/meus-bots)** — automações de tarefas, com exemplos adaptados para preservar os processos internos.
 
-### Ferramentas do dia a dia
+### Minha base de trabalho
 
-**Web:** TypeScript, React, Next.js e Tailwind.  
-**Dados e backend:** Node.js, Supabase e PostgreSQL.  
-**Automação e operação:** Python, Playwright, Git, Vercel, redes e servidores.
+`TypeScript` `React` `Next.js` `Node.js` `Supabase` `PostgreSQL` `Python` `Playwright`
 
----
+Do desenvolvimento à operação: interface, banco de dados, integrações, deploy e TI.
 
-Tem um projeto em mente? **[Bora conversar →](mailto:josehtl07@gmail.com)**
+<br />
+
+<a href="mailto:josehtl07@gmail.com">
+  <img src="./assets/contato.svg" width="100%" alt="Tem um projeto em mente? Bora construir. Envie um e-mail para josehtl07@gmail.com." />
+</a>
+
+<p align="center"><sub>José Luiz · Piracaia, SP · <a href="https://joseluiz.dev.br/">joseluiz.dev.br</a></sub></p>

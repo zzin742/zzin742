@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Painel de terminal com os projetos: a saída de `ls -la ~/projetos`, uma linha por projeto
-(nome, o que é, endereço), digitada linha a linha (SMIL, que o GitHub roda dentro de <img>).
-No README a imagem inteira é um link pro portfólio.
+Painel de terminal com os projetos: a saída de `ls ~/projetos`, uma linha por projeto com
+status (no ar / código aberto), nome, o que é e o endereço, digitada linha a linha (SMIL, que
+o GitHub roda dentro de <img>), e um botão pro portfólio. No README a imagem inteira é um link.
 
     python scripts/make_projects_svg.py [saida.svg]
     STATIC=1 python scripts/make_projects_svg.py   # quadro congelado pra preview
@@ -18,46 +18,47 @@ STATIC = bool(os.environ.get("STATIC"))
 W = 869
 PAD = 22
 TITLEBAR_H = 30
-TITLE = "jose@jztech: ~$ ls -la ~/projetos"
+TITLE = "jose@jztech: ~$ ls ~/projetos"
 
 BG, BG2, FRAME = "#0a0e14", "#0d1420", "#1f6feb"
 MUTED, INK, ACCENT, CYAN = "#7d8590", "#e6edf3", "#d2ff00", "#22d3ee"
+LIVE, CODE = "#3fb950", "#bc8cff"
 
-# (pasta, o que é, endereço) — descrição com até 34 caracteres
+# (status, pasta, o que é, endereço) — descrição com até 34 caracteres
 PROJECTS = [
-    ("london-fog/", "loja virtual de calçados", "londonfogoficial.com.br"),
-    ("apice-contabilidade/", "site institucional do escritório", "apicecontabilidade.cnt.br"),
-    ("otto/", "finanças pessoais com IA", "otto-one-snowy.vercel.app"),
-    ("attentionguard/", "sonolência e atenção, por webcam", "github.com/zzin742/AttentionGuard"),
-    ("meus-bots/", "automação em Python do dia a dia", "github.com/zzin742/meus-bots"),
+    ("live", "london-fog/", "loja virtual de calçados", "londonfogoficial.com.br"),
+    ("live", "apice-contabilidade/", "site institucional do escritório", "apicecontabilidade.cnt.br"),
+    ("live", "otto/", "finanças pessoais com IA", "otto-one-snowy.vercel.app"),
+    ("code", "attentionguard/", "sonolência e atenção, por webcam", "github.com/zzin742/AttentionGuard"),
+    ("code", "meus-bots/", "automação em Python do dia a dia", "github.com/zzin742/meus-bots"),
 ]
 PORTFOLIO = "joseluiz.dev.br/#projetos"
+BUTTON = "abrir o portfólio ↗"
 
 FONT = 13
 CHAR_W = FONT * 0.6
 LINE_H = 26
-X_PERM = PAD
-X_NAME = PAD + round(12 * CHAR_W)
+X_DOT = PAD + 4
+X_NAME = PAD + 20
 X_DESC = X_NAME + round(22 * CHAR_W)
 X_URL = X_DESC + round(36 * CHAR_W)
-LINE_DUR = 0.45
+LINE_DUR = 0.4
 
 
 def esc(s):
     return html.escape(s)
 
 
-lines = []  # cada linha: lista de (x, texto, cor, peso)
-lines.append([(X_PERM, f"total {len(PROJECTS)}", MUTED, "400")])
-for name, desc, url in PROJECTS:
-    lines.append([(X_PERM, "drwxr-xr-x", MUTED, "400"), (X_NAME, name, CYAN, "700"),
-                  (X_DESC, desc, INK, "400"), (X_URL, url, MUTED, "400")])
+# linhas: lista de segmentos (x, texto, cor, peso); None = ponto de status
+lines = []
+lines.append([(X_NAME - 20, f"total {len(PROJECTS)}", MUTED, "400")])
+for status, name, desc, url in PROJECTS:
+    lines.append([("dot", status), (X_NAME, name, CYAN, "700"), (X_DESC, desc, INK, "400"), (X_URL, url, MUTED, "400")])
 lines.append([])
-lines.append([(X_PERM, "→ todos os projetos em", ACCENT, "400"),
-              (X_PERM + round(23 * CHAR_W), PORTFOLIO, ACCENT, "700"),
-              (X_PERM + round((23 + len(PORTFOLIO) + 2) * CHAR_W), "(clique aqui no painel)", MUTED, "400")])
+lines.append([("dot", "live"), (X_NAME, "no ar", MUTED, "400"), ("dot2", "code"), (X_NAME + round(10 * CHAR_W), "código aberto", MUTED, "400")])
 
-H = TITLEBAR_H + 22 + len(lines) * LINE_H + 22
+n_lines = len(lines)
+H = TITLEBAR_H + 22 + n_lines * LINE_H + 22
 
 parts = [
     '<?xml version="1.0" encoding="UTF-8"?>',
@@ -79,25 +80,35 @@ for i, segs in enumerate(lines):
         continue
     top = y0 + i * LINE_H
     base = top + LINE_H * 0.7
-    texts = "".join(f'<text xml:space="preserve" x="{x}" y="{base:.1f}" font-size="{FONT}" fill="{c}" font-weight="{w}">{esc(t)}</text>'
-                    for x, t, c, w in segs)
+    content = ""
+    for seg in segs:
+        if seg[0] == "dot":
+            content += f'<circle cx="{X_DOT + 3}" cy="{base - 4.5:.1f}" r="4" fill="{LIVE if seg[1] == "live" else CODE}"/>'
+        elif seg[0] == "dot2":
+            content += f'<circle cx="{X_NAME + round(8.5 * CHAR_W)}" cy="{base - 4.5:.1f}" r="4" fill="{LIVE if seg[1] == "live" else CODE}"/>'
+        else:
+            x, t, c, w = seg
+            content += f'<text xml:space="preserve" x="{x}" y="{base:.1f}" font-size="{FONT}" fill="{c}" font-weight="{w}">{esc(t)}</text>'
     if STATIC:
-        parts.append(texts)
+        parts.append(content)
         continue
     delay = i * LINE_DUR
     parts.append(
         f'<clipPath id="l{i}"><rect x="{PAD}" y="{top}" height="{LINE_H}" width="0">'
         f'<animate attributeName="width" from="0" to="{W - PAD * 2}" begin="{delay:.2f}s" dur="{LINE_DUR:.2f}s" fill="freeze"/>'
-        f'</rect></clipPath><g clip-path="url(#l{i})">{texts}</g>'
+        f'</rect></clipPath><g clip-path="url(#l{i})">{content}</g>'
     )
 
-# cursor piscando no fim
-last_top = y0 + (len(lines) - 1) * LINE_H
-cx = X_PERM + round((23 + len(PORTFOLIO) + 2 + len("(clique aqui no painel)") + 1) * CHAR_W)
-begin = "" if STATIC else f' begin="{len(lines) * LINE_DUR:.2f}s"'
-parts.append(f'<rect x="{cx}" y="{last_top + 5}" width="8" height="15" fill="{INK}" opacity="{1 if STATIC else 0}">'
-             + ("" if STATIC else f'<animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.5;0.51;1" dur="1s" repeatCount="indefinite"{begin}/>')
-             + '</rect>')
+# botão "abrir o portfólio" no canto inferior direito, com o endereço ao lado
+last_top = y0 + (n_lines - 1) * LINE_H
+bw = round(len(BUTTON) * CHAR_W + 28)
+bx, by, bh = W - PAD - bw, last_top - 2, 30
+delay = n_lines * LINE_DUR
+anim = "" if STATIC else f'<animate attributeName="opacity" from="0" to="1" begin="{delay:.2f}s" dur="0.4s" fill="freeze"/>'
+parts.append(f'<g opacity="{1 if STATIC else 0}">{anim}'
+             f'<rect x="{bx}" y="{by}" width="{bw}" height="{bh}" rx="7" fill="#161b22" stroke="{ACCENT}" stroke-opacity="0.8"/>'
+             f'<text x="{bx + bw / 2:.1f}" y="{by + 20}" font-size="{FONT}" font-weight="700" fill="{ACCENT}" text-anchor="middle">{esc(BUTTON)}</text>'
+             f'<text x="{bx - 12}" y="{by + 20}" font-size="12" fill="{MUTED}" text-anchor="end">{esc(PORTFOLIO)}</text></g>')
 parts.append('</svg>')
 svg = "".join(parts)
 with open(OUT, "w", encoding="utf-8") as f:

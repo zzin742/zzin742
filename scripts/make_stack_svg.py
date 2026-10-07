@@ -11,6 +11,9 @@ import html
 import os
 import sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from stack_icons import ICONS
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, "..", "stack.svg")
 STATIC = bool(os.environ.get("STATIC"))
@@ -23,6 +26,9 @@ TITLE = "jose@jztech: ~$ cat stack.txt"
 BG, BG2, FRAME = "#0a0e14", "#0d1420", "#1f6feb"
 CHIP, CHIP_LINE = "#161b22", "#30363d"
 MUTED, INK, ACCENT = "#7d8590", "#e6edf3", "#d2ff00"
+ICON = "#9198a1"        # ícone discreto, cinza; o limão fica só nos comentários
+ICON_PX = 14
+ICON_SCALE = ICON_PX / 24
 
 SECTIONS = [
     ("front-end", ["HTML5", "CSS3", "JavaScript", "TypeScript", "React", "Next.js", "Tailwind CSS", "Sass"]),
@@ -34,8 +40,8 @@ SECTIONS = [
 FONT = 13
 CHAR_W = FONT * 0.6
 CHIP_H = 26
-CHIP_PAD = 11
-GAP = 8
+CHIP_PAD = 10
+GAP = 7
 ROW_H = 34
 LABEL_H = 24
 SECTION_GAP = 10
@@ -58,16 +64,20 @@ for label, items in SECTIONS:
     y += LABEL_H
     x = PAD
     for item in items:
-        w = round(len(item) * CHAR_W + CHIP_PAD * 2)
+        icon = ICONS.get(item, "").replace("#d2ff00", ICON)
+        icon_w = ICON_PX + 6 if icon else 0
+        w = round(len(item) * CHAR_W + CHIP_PAD * 2 + icon_w)
         if x + w > max_x:
             x = PAD
             y += ROW_H
         delay = n * STAGGER
         cls = '' if STATIC else f' class="c" style="animation-delay:{delay:.2f}s"'
-        body.append(
-            f'<g{cls}><rect x="{x}" y="{y}" width="{w}" height="{CHIP_H}" rx="6" fill="{CHIP}" stroke="{CHIP_LINE}"/>'
-            f'<text x="{x + w / 2:.1f}" y="{y + CHIP_H * 0.68:.1f}" font-size="{FONT}" fill="{INK}" text-anchor="middle">{esc(item)}</text></g>'
-        )
+        chip = f'<g{cls}><rect x="{x}" y="{y}" width="{w}" height="{CHIP_H}" rx="6" fill="{CHIP}" stroke="{CHIP_LINE}"/>'
+        if icon:
+            chip += (f'<g transform="translate({x + CHIP_PAD - 1} {y + (CHIP_H - ICON_PX) / 2:.1f}) scale({ICON_SCALE:.4f})">'
+                     f'{icon}</g>')
+        chip += (f'<text x="{x + CHIP_PAD + icon_w}" y="{y + CHIP_H * 0.68:.1f}" font-size="{FONT}" fill="{INK}">{esc(item)}</text></g>')
+        body.append(chip)
         x += w + GAP
         n += 1
     y += ROW_H + SECTION_GAP

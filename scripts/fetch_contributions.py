@@ -250,6 +250,13 @@ if __name__ == "__main__":
         days = fetch_days()
     data = build_data(days)
     data["source"] = source
+    try:
+        hdr = {"User-Agent": "profile-readme-bot/1.0"}
+        if TOKEN:
+            hdr["Authorization"] = f"Bearer {TOKEN}"
+        data["public_repos"] = requests.get(f"{API}/users/{USERNAME}", headers=hdr, timeout=30).json().get("public_repos")
+    except Exception as e:
+        print(f"não consegui ler o nº de repos públicos ({e})", file=sys.stderr)
     os.makedirs(os.path.dirname(OUT_PATH), exist_ok=True)
     with open(OUT_PATH, "w") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)

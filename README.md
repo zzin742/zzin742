@@ -6,7 +6,9 @@
 
   contrib-heatmap.svg  -> dados reais, regenerado todo dia por .github/workflows/update-profile-art.yml
   jose-ascii.svg       -> retrato ASCII (estático): python scripts/prep_photo.py && python scripts/make_ascii_svg.py
-  info-card.svg        -> card neofetch (estático):  python scripts/make_info_card.py
+  info-card.svg        -> card neofetch; a linha "GitHub" é regenerada todo dia pelo workflow
+  stack.svg            -> painel da stack (estático):   python scripts/make_stack_svg.py
+  projects.svg         -> painel dos projetos (estático): python scripts/make_projects_svg.py
   Retrato atual: perfil olhando pra esquerda (NO_REMBG=1 HEAD_FRAC=0.68 LINES=0.5 FADE=0.15 CLAHE=2.5 no prep;
   COLS=220 DITHER=1 no ascii). Alternativas prontas em assets/portrait/ (espelhado e frontal).
 -->
@@ -44,70 +46,15 @@ Quando uma rotina é repetitiva demais para ocupar uma pessoa, eu escrevo um rob
 
 <h3><code>jose@jztech ~ $ cat stack.txt</code></h3>
 
-**Front-end**
+<img src="./stack.svg" width="860" alt="Stack: HTML5, CSS3, JavaScript, TypeScript, React, Next.js, Tailwind CSS, Sass; Node.js, Python, Supabase, PostgreSQL, Prisma, Redis; Playwright, Linux, Docker, Nginx, Bash, Vercel, Cloudflare, GitHub Actions, redes e servidores; Git, GitHub, VS Code, Figma, Notion, Postman" />
 
-<p>
-  <img src="./assets/stack/html.svg" alt="HTML5" height="34" />
-  <img src="./assets/stack/css.svg" alt="CSS3" height="34" />
-  <img src="./assets/stack/javascript.svg" alt="JavaScript" height="34" />
-  <img src="./assets/stack/typescript.svg" alt="TypeScript" height="34" />
-  <img src="./assets/stack/react.svg" alt="React" height="34" />
-  <img src="./assets/stack/nextjs.svg" alt="Next.js" height="34" />
-  <img src="./assets/stack/tailwind.svg" alt="Tailwind CSS" height="34" />
-  <img src="./assets/stack/sass.svg" alt="Sass" height="34" />
-</p>
-
-**Back-end e dados**
-
-<p>
-  <img src="./assets/stack/nodejs.svg" alt="Node.js" height="34" />
-  <img src="./assets/stack/python.svg" alt="Python" height="34" />
-  <img src="./assets/stack/supabase.svg" alt="Supabase" height="34" />
-  <img src="./assets/stack/postgresql.svg" alt="PostgreSQL" height="34" />
-  <img src="./assets/stack/prisma.svg" alt="Prisma" height="34" />
-  <img src="./assets/stack/redis.svg" alt="Redis" height="34" />
-</p>
-
-**Automação e infraestrutura**
-
-<p>
-  <img src="./assets/stack/playwright.svg" alt="Playwright" height="34" />
-  <img src="./assets/stack/linux.svg" alt="Linux" height="34" />
-  <img src="./assets/stack/docker.svg" alt="Docker" height="34" />
-  <img src="./assets/stack/nginx.svg" alt="Nginx" height="34" />
-  <img src="./assets/stack/bash.svg" alt="Bash" height="34" />
-  <img src="./assets/stack/vercel.svg" alt="Vercel" height="34" />
-  <img src="./assets/stack/cloudflare.svg" alt="Cloudflare" height="34" />
-  <img src="./assets/stack/githubactions.svg" alt="GitHub Actions" height="34" />
-  <img src="./assets/stack/redes-servidores.svg" alt="Redes e servidores" height="34" />
-</p>
-
-**Ferramentas**
-
-<p>
-  <img src="./assets/stack/git.svg" alt="Git" height="34" />
-  <img src="./assets/stack/github.svg" alt="GitHub" height="34" />
-  <img src="./assets/stack/vscode.svg" alt="VS Code" height="34" />
-  <img src="./assets/stack/figma.svg" alt="Figma" height="34" />
-  <img src="./assets/stack/notion.svg" alt="Notion" height="34" />
-  <img src="./assets/stack/postman.svg" alt="Postman" height="34" />
-</p>
-
-<br>
+<br><br>
 
 <h3><code>jose@jztech ~ $ ls ~/projetos</code></h3>
 
-<p>
-  <a href="https://londonfogoficial.com.br/">London Fog ↗</a> &nbsp;·&nbsp;
-  <a href="https://apicecontabilidade.cnt.br/">Ápice Contabilidade ↗</a> &nbsp;·&nbsp;
-  <a href="https://otto-one-snowy.vercel.app/">Otto ↗</a> &nbsp;·&nbsp;
-  <a href="https://github.com/zzin742/AttentionGuard">AttentionGuard ↗</a> &nbsp;·&nbsp;
-  <a href="https://github.com/zzin742/meus-bots">Bots em Python ↗</a>
-</p>
+<a href="https://joseluiz.dev.br/#projetos"><img src="./projects.svg" width="860" alt="Projetos: London Fog (loja virtual de calçados), Ápice Contabilidade (site institucional), Otto (finanças pessoais com IA), AttentionGuard (sonolência e atenção por webcam) e bots em Python. Clique pra abrir o portfólio." /></a>
 
-[Todos os projetos no portfólio →](https://joseluiz.dev.br/#projetos)
-
-<br>
+<br><br>
 
 <h3><code>jose@jztech ~ $ ./links.sh</code></h3>
 

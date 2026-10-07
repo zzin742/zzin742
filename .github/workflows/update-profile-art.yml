@@ -2,7 +2,7 @@ name: Atualizar arte do perfil
 
 # Regenera o gráfico de contribuições (SVG) com dados reais.
 # Roda todo dia, em push na main e sob demanda (aba Actions).
-# O retrato ASCII e o card são estáticos: regenere localmente quando mudar foto ou dados.
+# O retrato ASCII, a stack e os projetos são estáticos: regenere localmente quando mudar foto ou dados.
 
 "on":
   schedule:
@@ -38,8 +38,11 @@ jobs:
       - name: Renderizar heatmap animado
         run: python scripts/render_heatmap_svg.py
 
+      - name: Renderizar card neofetch (linha do GitHub é viva)
+        run: python scripts/make_info_card.py
+
       - name: Commitar arte atualizada
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore: atualiza gráfico de contribuições [skip ci]"
-          file_pattern: "data/contributions.json contrib-heatmap.svg"
+          file_pattern: "data/contributions.json contrib-heatmap.svg info-card.svg"

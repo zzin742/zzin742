@@ -1,0 +1,6 @@
+# só pra regenerar o retrato ASCII e o card localmente (não roda no Actions)
+Pillow>=10
+numpy>=1.26
+opencv-python-headless>=4.9
+rembg>=2.0
+onnxruntime>=1.17

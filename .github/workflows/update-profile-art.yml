@@ -1,0 +1,42 @@
+name: Atualizar arte do perfil
+
+# Regenera o gráfico de contribuições (SVG) com dados reais.
+# Roda todo dia, em push na main e sob demanda (aba Actions).
+# O retrato ASCII e o card são estáticos: regenere localmente quando mudar foto ou dados.
+
+"on":
+  schedule:
+    - cron: "23 6 * * *"   # ~06:23 UTC = 03:23 em Brasília
+  workflow_dispatch: {}
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  heatmap:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependências
+        run: pip install -r scripts/requirements.txt
+
+      - name: Raspar contribuições reais (sem token)
+        run: python scripts/fetch_contributions.py
+        env:
+          GH_PROFILE_USER: zzin742
+
+      - name: Renderizar heatmap animado
+        run: python scripts/render_heatmap_svg.py
+
+      - name: Commitar arte atualizada
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: atualiza gráfico de contribuições [skip ci]"
+          file_pattern: "data/contributions.json contrib-heatmap.svg"

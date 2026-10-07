@@ -14,7 +14,7 @@ bloco acompanhando a borda, escalonado de cima pra baixo.
 
     python scripts/make_ascii_svg.py [entrada.png] [saida.svg]
 
-Variáveis: COLS=150 GAMMA=1.18 WHITE_FLOOR=0.80 CONTRAST=1.05 STATIC=1 INVERT=1
+Variáveis: COLS=150 GAMMA=1.18 WHITE_FLOOR=0.80 CONTRAST=1.05 STATIC=1 INVERT=1 DITHER=1 RAMP="..." INK="#hex"
 (GAMMA < 1 clareia os meios-tons -> pele mais vazada; GAMMA > 1 escurece)
 """
 import html
@@ -38,7 +38,8 @@ ART_W_TARGET = 800
 CELL_W = ART_W_TARGET / COLS
 CELL_H = CELL_W * 15 / 8
 ROWS = round(COLS * 8 / 15)
-RAMP = " .`:-=+*cs#%@"  # claro (esparso) -> escuro (denso); o espaço inicial limpa o fundo
+RAMP = os.environ.get("RAMP", " .`:-=+*cs#%@")  # claro (esparso) -> escuro (denso); o espaço inicial limpa o fundo
+DITHER = bool(os.environ.get("DITHER"))  # Floyd-Steinberg: espalha o erro de quantização, tons mais suaves
 
 CONTRAST = float(os.environ.get("CONTRAST", 1.05))
 BRIGHTNESS = float(os.environ.get("BRIGHTNESS", 1.0))
@@ -59,7 +60,7 @@ BG = "#0d1117"
 BG2 = "#111722"
 FRAME = "#30363d"
 TITLE_TEXT = "#7d8590"
-INK = "#c9d1d9"
+INK = os.environ.get("INK", "#c9d1d9")
 CURSOR = "#c9d1d9"
 
 ROW_DUR = 5.8 / ROWS   # o retrato inteiro imprime em ~6s em qualquer resolução
@@ -76,21 +77,50 @@ px = im.load()
 
 STATIC = bool(os.environ.get("STATIC"))  # quadro congelado pra preview
 
-rows_txt = []
+# luminância já com gama (e invertida, se for o caso), em [0,1]
+lum_grid = []
 for y in range(ROWS):
-    chars = []
+    row = []
     for x in range(COLS):
-        lum = px[x, y] / 255.0
-        lum = pow(lum, GAMMA)
+        lum = pow(px[x, y] / 255.0, GAMMA)
         if INVERT:
             lum = 1.0 - lum
-        if lum >= WHITE_FLOOR:
-            chars.append(" ")
-            continue
-        idx = int((1.0 - lum) * (len(RAMP) - 1) + 0.5)
-        idx = max(0, min(len(RAMP) - 1, idx))
-        chars.append(RAMP[idx])
-    rows_txt.append("".join(chars))
+        row.append(lum)
+    lum_grid.append(row)
+
+N = len(RAMP) - 1
+rows_txt = []
+if DITHER:
+    # Floyd-Steinberg sobre o valor de "tinta" v = (1-lum)*N; o fundo (acima do piso branco)
+    # vira espaço e não recebe nem espalha erro, pra continuar limpo.
+    ink = [[(1.0 - l) * N for l in row] for row in lum_grid]
+    bg = [[l >= WHITE_FLOOR for l in row] for row in lum_grid]
+    for y in range(ROWS):
+        chars = []
+        for x in range(COLS):
+            if bg[y][x]:
+                chars.append(" ")
+                continue
+            v = ink[y][x]
+            q = max(0, min(N, int(v + 0.5)))
+            err = v - q
+            chars.append(RAMP[q])
+            for dx, dy, w in ((1, 0, 7 / 16), (-1, 1, 3 / 16), (0, 1, 5 / 16), (1, 1, 1 / 16)):
+                xx, yy = x + dx, y + dy
+                if 0 <= xx < COLS and 0 <= yy < ROWS and not bg[yy][xx]:
+                    ink[yy][xx] += err * w
+        rows_txt.append("".join(chars))
+else:
+    for y in range(ROWS):
+        chars = []
+        for x in range(COLS):
+            lum = lum_grid[y][x]
+            if lum >= WHITE_FLOOR:
+                chars.append(" ")
+                continue
+            idx = int((1.0 - lum) * N + 0.5)
+            chars.append(RAMP[max(0, min(N, idx))])
+        rows_txt.append("".join(chars))
 
 art_top = TITLEBAR_H + PAD * 0.35
 

@@ -7,7 +7,8 @@
   contrib-heatmap.svg  -> dados reais, regenerado todo dia por .github/workflows/update-profile-art.yml
   jose-ascii.svg       -> retrato ASCII (estático): python scripts/prep_photo.py && python scripts/make_ascii_svg.py
   info-card.svg        -> card neofetch (estático):  python scripts/make_info_card.py
-  Alternativas de retrato em assets/portrait/ (frontal e perfil olhando pra esquerda).
+  Retrato atual: perfil olhando pra esquerda (NO_REMBG=1 HEAD_FRAC=0.68 LINES=0.5 FADE=0.15 CLAHE=2.5 no prep;
+  COLS=220 DITHER=1 no ascii). Alternativas prontas em assets/portrait/ (espelhado e frontal).
 -->
 
 <a href="https://joseluiz.dev.br/">

@@ -19,6 +19,8 @@ Variáveis opcionais:
     HEAD_FRAC=1  fração da altura da pessoa a manter (0.6 = cabeça e pescoço)
     BG=white     cor do fundo composto (black pra usar com INVERT=1 no ASCII)
     FLIP=1       espelha a foto horizontalmente
+    LINES=0.5    escurece linhas finas (contorno do rosto, olho, boca)
+    FADE=0.12    esmaece a base da imagem pro fundo
     LO=2 HI=98   percentis do estiramento de tons
 """
 import os
@@ -35,7 +37,9 @@ SMOOTH = int(os.environ.get("SMOOTH", "2"))
 PAD = int(os.environ.get("PAD", "40"))
 LO, HI = float(os.environ.get("LO", "2")), float(os.environ.get("HI", "98"))
 HEAD_FRAC = float(os.environ.get("HEAD_FRAC", "1.0"))
-BGCOL = 0 if os.environ.get("BG", "white").lower() in ("black", "preto", "0") else 255  # cor do fundo composto  # 1.0 = pessoa inteira; 0.6 = só cabeça e pescoço
+BGCOL = 0 if os.environ.get("BG", "white").lower() in ("black", "preto", "0") else 255  # cor do fundo composto
+LINES = float(os.environ.get("LINES", "0"))   # 0-1: quanto escurecer as linhas finas (contorno, olho, boca, orelha)
+FADE = float(os.environ.get("FADE", "0"))     # 0-0.5: fração da altura que esmaece pro fundo na base (some com o colarinho)  # 1.0 = pessoa inteira; 0.6 = só cabeça e pescoço
 
 img = Image.open(INP).convert("RGBA")
 if os.environ.get("FLIP"):
@@ -68,6 +72,17 @@ except Exception as e:
     print(f"opencv indisponível ({e}); usando autocontraste do Pillow", file=sys.stderr)
     tone = np.array(ImageOps.autocontrast(Image.fromarray(rgb).convert("L"), cutoff=2))
 
+# 3b. linhas finas escuras sobre claro (diferença de gaussianas) -> escurece
+if LINES > 0:
+    try:
+        import cv2
+        fine = cv2.GaussianBlur(tone, (0, 0), 1.2).astype(np.float32)
+        coarse = cv2.GaussianBlur(tone, (0, 0), 5.0).astype(np.float32)
+        ridges = np.clip((coarse - fine) / 40.0, 0, 1)
+        tone = (np.clip(tone.astype(np.float32) / 255.0 - LINES * ridges, 0, 1) * 255).astype(np.uint8)
+    except Exception as e:
+        print(f"realce de linhas pulado ({e})", file=sys.stderr)
+
 # 4. estica os tons só sobre a pessoa e compõe sobre branco
 subj = alpha > 128
 lo, hi = (np.percentile(tone[subj], [LO, HI]) if subj.any() else (tone.min(), tone.max()))
@@ -98,6 +113,15 @@ x0, y0 = cx - side // 2, cy - side // 2
 sx0, sy0 = max(x0, 0), max(y0, 0)
 sx1, sy1 = min(x0 + side, out.shape[1]), min(y0 + side, out.shape[0])
 canvas[sy0 - y0:sy1 - y0, sx0 - x0:sx1 - x0] = out[sy0:sy1, sx0:sx1].astype(np.uint8)
+
+# 6. esmaece a base pro fundo (evita o corte seco no pescoço/colarinho)
+if FADE > 0:
+    n = int(side * FADE)
+    if n > 1:
+        ramp = (1 - np.cos(np.linspace(0, np.pi, n))) / 2        # 0 -> 1, suave
+        band = canvas[side - n:, :].astype(np.float32)
+        band = band * (1 - ramp[:, None]) + float(BGCOL) * ramp[:, None]
+        canvas[side - n:, :] = band.astype(np.uint8)
 
 Image.fromarray(canvas, mode="L").save(OUT)
 print("gravado", OUT, canvas.shape)

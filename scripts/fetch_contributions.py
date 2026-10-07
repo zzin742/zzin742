@@ -6,11 +6,19 @@ página do perfil usa) e grava data/contributions.json com os dias crus mais
 estatísticas derivadas (sequência atual, maior sequência, melhor dia, totais
 mensais).
 
-Sem token, sem GraphQL: só o HTML público que o GitHub já serve.
+Dois modos:
+  - público (padrão): raspa a página, sem token. Só conta o que é público, a não ser que a
+    chave "Private contributions" esteja ligada no perfil.
+  - com token (PROFILE_TOKEN definido): conta via API de busca commits, PRs, issues e
+    repositórios criados, inclusive em repositórios privados que o token acessa.
+    O resultado fica muito perto do gráfico que você vê logado. Se a API falhar, cai no público.
+
 Rodado todo dia por .github/workflows/update-profile-art.yml.
 
     GH_PROFILE_USER=zzin742 python scripts/fetch_contributions.py
+    GH_PROFILE_USER=zzin742 PROFILE_TOKEN=ghp_... python scripts/fetch_contributions.py
 """
+import time
 import datetime
 import json
 import os
@@ -21,7 +29,10 @@ import requests
 from bs4 import BeautifulSoup
 
 USERNAME = os.environ.get("GH_PROFILE_USER", "zzin742")
+TOKEN = os.environ.get("PROFILE_TOKEN", "").strip()
 URL = f"https://github.com/users/{USERNAME}/contributions"
+API = "https://api.github.com"
+SEARCH_PAUSE = 2.1  # a busca aceita 30 chamadas/minuto
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT_PATH = os.path.join(HERE, "..", "data", "contributions.json")
 
@@ -52,6 +63,115 @@ def fetch_days():
         days.append({"date": date, "count": count, "level": int(td.get("data-level") or 0)})
 
     days.sort(key=lambda d: d["date"])
+    return days
+
+
+def _api_get(path, params, headers):
+    """GET na API com respeito ao rate limit (espera e tenta de novo até 3 vezes)."""
+    for tentativa in range(3):
+        r = requests.get(f"{API}{path}", params=params, headers=headers, timeout=30)
+        if r.status_code in (403, 429) and r.headers.get("X-RateLimit-Remaining") == "0":
+            reset = int(r.headers.get("X-RateLimit-Reset", time.time() + 60))
+            time.sleep(max(1, reset - time.time()) + 1)
+            continue
+        r.raise_for_status()
+        return r.json()
+    r.raise_for_status()
+
+
+def _search_all(path, query, headers, on_item):
+    """Percorre todas as páginas de uma busca (máx. 1000 resultados por consulta)."""
+    page = 1
+    while True:
+        data = _api_get(path, {"q": query, "per_page": 100, "page": page, "advanced_search": "true"}, headers)
+        items = data.get("items", [])
+        for it in items:
+            on_item(it)
+        time.sleep(SEARCH_PAUSE)
+        if len(items) < 100 or page * 100 >= min(data.get("total_count", 0), 1000):
+            return data.get("total_count", 0)
+        page += 1
+
+
+def _janelas(start, end, dias):
+    a = start
+    while a <= end:
+        b = min(a + datetime.timedelta(days=dias - 1), end)
+        yield a, b
+        a = b + datetime.timedelta(days=1)
+
+
+def _levels_like_github(days):
+    """Níveis 0-4 por quartis dos dias com atividade, parecido com o que o GitHub faz."""
+    nz = sorted(d["count"] for d in days if d["count"] > 0)
+    if not nz:
+        return
+    def pct(p):
+        return nz[min(len(nz) - 1, int(p * len(nz)))]
+    q1, q2, q3 = pct(0.25), pct(0.5), pct(0.75)
+    for d in days:
+        c = d["count"]
+        d["level"] = 0 if c == 0 else 1 if c <= q1 else 2 if c <= q2 else 3 if c <= q3 else 4
+
+
+def fetch_days_api(token):
+    """Conta contribuições por dia via API, inclusive privadas: commits (busca, só branch
+    padrão, igual ao GitHub), PRs e issues abertos, repositórios criados. Datas em UTC."""
+    headers = {"Authorization": f"Bearer {token}", "Accept": "application/vnd.github+json",
+               "User-Agent": "profile-readme-bot/1.0"}
+    today = datetime.datetime.now(datetime.timezone.utc).date()
+    start = today - datetime.timedelta(days=370)
+    counts = {}
+    d = start
+    while d <= today:
+        counts[d.isoformat()] = 0
+        d += datetime.timedelta(days=1)
+
+    def add(day):
+        if day in counts:
+            counts[day] += 1
+
+    # 1. commits (dedupe por SHA). Janela mensal; se passar de 1000, refina por semana.
+    vistos = set()
+    def on_commit(it):
+        sha = it.get("sha")
+        if sha and sha not in vistos:
+            vistos.add(sha)
+            add(it["commit"]["author"]["date"][:10])
+    for a, b in _janelas(start, today, 31):
+        q = f"author:{USERNAME} author-date:{a}..{b}"
+        total = _api_get("/search/commits", {"q": q, "per_page": 1}, headers).get("total_count", 0)
+        time.sleep(SEARCH_PAUSE)
+        if total == 0:
+            continue
+        if total <= 1000:
+            _search_all("/search/commits", q, headers, on_commit)
+        else:
+            for a2, b2 in _janelas(a, b, 7):
+                _search_all("/search/commits", f"author:{USERNAME} author-date:{a2}..{b2}", headers, on_commit)
+
+    # 2. PRs e issues abertos (contam como contribuição no GitHub)
+    for kind in ("pr", "issue"):
+        try:
+            for a, b in _janelas(start, today, 92):
+                _search_all("/search/issues", f"author:{USERNAME} is:{kind} created:{a}..{b}", headers,
+                            lambda it: add(it["created_at"][:10]))
+        except requests.HTTPError as e:
+            print(f"busca de {kind} falhou ({e}); seguindo sem", file=sys.stderr)
+
+    # 3. repositórios criados
+    page = 1
+    while True:
+        repos = _api_get("/user/repos", {"affiliation": "owner", "per_page": 100, "page": page, "sort": "created"}, headers)
+        for r in repos:
+            if not r.get("fork"):
+                add(r["created_at"][:10])
+        if len(repos) < 100:
+            break
+        page += 1
+
+    days = [{"date": k, "count": v, "level": 0} for k, v in sorted(counts.items())]
+    _levels_like_github(days)
     return days
 
 
@@ -118,11 +238,21 @@ def build_data(days):
 
 
 if __name__ == "__main__":
-    days = fetch_days()
+    source = "public"
+    days = None
+    if TOKEN:
+        try:
+            days = fetch_days_api(TOKEN)
+            source = "api"
+        except Exception as e:
+            print(f"modo API falhou ({e}); usando a página pública", file=sys.stderr)
+    if days is None:
+        days = fetch_days()
     data = build_data(days)
+    data["source"] = source
     os.makedirs(os.path.dirname(OUT_PATH), exist_ok=True)
     with open(OUT_PATH, "w") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
-    print(f"gravado {OUT_PATH}: {data['total_contributions']} contribuições, "
+    print(f"gravado {OUT_PATH} ({source}): {data['total_contributions']} contribuições, "
           f"sequência atual {data['current_streak']['length']}, "
           f"maior sequência {data['longest_streak']['length']}")

@@ -31,6 +31,9 @@ jobs:
         run: python scripts/fetch_contributions.py
         env:
           GH_PROFILE_USER: zzin742
+          # opcional: PAT clássico com escopo "repo" (Settings > Secrets > Actions > PROFILE_TOKEN).
+          # Com ele o gráfico conta também os repositórios privados; sem ele, só o que é público.
+          PROFILE_TOKEN: ${{ secrets.PROFILE_TOKEN }}
 
       - name: Renderizar heatmap animado
         run: python scripts/render_heatmap_svg.py

@@ -20,8 +20,8 @@ OUT_PATH = os.path.join(HERE, "..", "contrib-heatmap.svg")
 
 TITLE = os.environ.get("HEATMAP_TITLE", "jose@jztech: ~/contributions --graph")
 
-# rampa verde do GitHub: vazio -> mais forte (nível 5 é um topo neon)
-PALETTE = ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353", "#69f0a0"]
+# a mesma rampa de 5 níveis do GitHub no tema escuro (vazio -> mais forte)
+PALETTE = ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"]
 MESES = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"]
 
 CELL = 12
@@ -60,7 +60,11 @@ def br_short(iso):
     return f"{d.day:02d}/{MESES[d.month - 1].lower()}"
 
 
-def level_for(count):
+def level_for(count, gh_level=None):
+    """Usa o nível (0-4) que o próprio GitHub calcula pra cada dia, pra cor bater com o
+    gráfico do perfil. Só cai no cálculo próprio se o scraper não trouxe o nível."""
+    if gh_level is not None:
+        return max(0, min(len(PALETTE) - 1, int(gh_level)))
     if count == 0:
         return 0
     if count <= 5:
@@ -69,9 +73,7 @@ def level_for(count):
         return 2
     if count <= 30:
         return 3
-    if count <= 50:
-        return 4
-    return 5
+    return 4
 
 
 def build_grid(days):
@@ -84,7 +86,7 @@ def build_grid(days):
         weekday = (date.weekday() + 1) % 7
         while len(col) < weekday:
             col.append(None)
-        col.append((d["date"], d["count"], level_for(d["count"])))
+        col.append((d["date"], d["count"], level_for(d["count"], d.get("level"))))
         if len(col) == 7:
             grid.append(col)
             col = []
